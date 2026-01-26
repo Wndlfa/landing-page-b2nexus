@@ -7,7 +7,7 @@ services:
     build: . 
     restart: always
     networks:
-      - proxy # A rede do seu Traefik
+      - IaAgentsNet # A rede do seu Traefik
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.react-app.rule=Host(`b2nexus.com`)"
@@ -16,5 +16,5 @@ services:
       - "traefik.http.services.react-app.loadbalancer.server.port=80"
 
 networks:
-  proxy:
+  IaAgentsNet:
     external: true
