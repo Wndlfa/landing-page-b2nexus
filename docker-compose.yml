@@ -12,7 +12,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.react-app.rule=Host(`b2nexus.com`)"
       - "traefik.http.routers.react-app.entrypoints=websecure"
-      - "traefik.http.routers.react-app.tls.certresolver=letsencryptresolver"
+      - "traefik.http.routers.react-app.tls.certresolver=myresolver"
       - "traefik.http.services.react-app.loadbalancer.server.port=80"
 
 networks:
