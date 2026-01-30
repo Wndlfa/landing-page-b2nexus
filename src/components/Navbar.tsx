@@ -27,7 +27,7 @@ const Navbar = () => {
             <div className="w-9 h-9 rounded-lg bg-gradient-primary flex items-center justify-center">
               <Zap className="w-5 h-5 text-primary-foreground" />
             </div>
-            <span className="text-xl font-bold text-foreground">Nexus Rise</span>
+            <span className="text-xl font-bold text-foreground">B2 Nexus</span>
           </a>
 
           {/* Desktop nav */}

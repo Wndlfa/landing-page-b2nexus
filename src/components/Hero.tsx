@@ -57,7 +57,7 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            A <strong className="text-foreground">Nexus Rise</strong> combina estratégia de marketing 
+            A <strong className="text-foreground">B2 Nexus</strong> combina estratégia de marketing 
             com inteligência artificial para transformar leads em clientes de forma previsível e escalável.
           </motion.p>
 
@@ -84,7 +84,7 @@ const Hero = () => {
             transition={{ delay: 0.8, duration: 0.6 }}
             className="mt-16 pt-8 border-t border-border/50"
           >
-            <p className="text-sm text-muted-foreground mb-4">Empresas que confiam na Nexus Rise</p>
+            <p className="text-sm text-muted-foreground mb-4">Empresas que confiam na B2 Nexus</p>
             <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
               {['TechFlow', 'Innovate', 'ScaleUp', 'GrowthCo', 'NextGen'].map((company) => (
                 <span key={company} className="text-lg font-semibold text-muted-foreground">

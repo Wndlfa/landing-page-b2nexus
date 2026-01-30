@@ -5,7 +5,7 @@ const testimonials = [
   {
     name: "Ricardo Mendes",
     role: "CEO, TechFlow",
-    content: "A Nexus Rise transformou completamente nossa operação de marketing. Em 3 meses, triplicamos nossa base de leads qualificados.",
+    content: "A B2 Nexus transformou completamente nossa operação de marketing. Em 3 meses, triplicamos nossa base de leads qualificados.",
     rating: 5
   },
   {
