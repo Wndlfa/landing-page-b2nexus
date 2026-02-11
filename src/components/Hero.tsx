@@ -24,38 +24,38 @@ const Hero = () => {
       <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
       <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
 
-      <div className="container relative z-10 px-4 py-20">
+      <div className="container relative z-10 px-4 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-center max-w-5xl mx-auto"
+          className="text-start max-w-5xl mx-auto"
         >
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full mb-8"
+            className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full my-8"
           >
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm text-muted-foreground">Marketing potencializado por IA</span>
           </motion.div>
 
           {/* Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 text-start">
             <span className="text-foreground">Escale seu </span>
             <span className="text-gradient">crescimento</span>
             <br />
             <span className="text-foreground">com automação</span>
           </h1>
-
+          
           {/* Subheadline */}
           <motion.p
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed"
+            className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed text-start"
           >
             A <strong className="text-foreground">B2 Nexus</strong> combina estratégia de marketing 
             com inteligência artificial para transformar leads em clientes de forma previsível e escalável.
@@ -66,7 +66,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.6, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            className="flex flex-col sm:flex-row gap-4 justify-start items-start "
           >
             <Button variant="hero" size="lg" className="group">
               Agendar consultoria grátis
@@ -93,6 +93,26 @@ const Hero = () => {
               ))}
             </div>
           </motion.div>
+        </motion.div>
+
+        {/* Right Column - Image Placeholder */}
+        <motion.div
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+          className="hidden lg:flex items-center justify-center relative"
+        >
+          <div className="w-full aspect-square max-w-md bg-muted/10 rounded-3xl border-2 border-dashed border-primary/20 flex items-center justify-center relative backdrop-blur-sm">
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent rounded-3xl" />
+            
+            <div className="text-center p-6 relative z-10">
+              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 border border-primary/20 shadow-lg shadow-primary/5">
+                <Sparkles className="w-8 h-8 text-primary" />
+              </div>
+              <h3 className="text-lg font-semibold text-foreground mb-1">Visualização do Produto</h3>
+              <p className="text-sm text-muted-foreground">Adicione sua imagem ou mockup aqui</p>
+            </div>
+          </div>
         </motion.div>
       </div>
     </section>
