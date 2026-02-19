@@ -1,10 +1,18 @@
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Zap, Shield, Activity, Cpu, Globe } from "lucide-react";
+
+const companies = [
+  { name: 'TechFlow', icon: Activity },
+  { name: 'Innovate', icon: Zap },
+  { name: 'ScaleUp', icon: Cpu },
+  { name: 'GrowthCo', icon: Globe },
+  { name: 'NextGen', icon: Shield },
+];
 
 const Hero = () => {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
       {/* Background gradient glow */}
       <div className="absolute inset-0 bg-gradient-glow" />
       
@@ -76,23 +84,6 @@ const Hero = () => {
               Ver resultados
             </Button>
           </motion.div>
-
-          {/* Trust indicators */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
-            className="mt-16 pt-8 border-t border-border/50"
-          >
-            <p className="text-sm text-muted-foreground mb-4 text-center">Empresas que confiam na B2 Nexus</p>
-            <div className="flex flex-wrap justify-center items-center gap-8 opacity-60">
-              {['TechFlow', 'Innovate', 'ScaleUp', 'GrowthCo', 'NextGen'].map((company) => (
-                <span key={company} className="text-lg font-semibold text-muted-foreground">
-                  {company}
-                </span>
-              ))}
-            </div>
-          </motion.div>
         </motion.div>
 
         {/* Right Column - Image Placeholder */}
@@ -114,7 +105,63 @@ const Hero = () => {
             </div>
           </div>
         </motion.div>
+
+       
       </div>
+
+      {/* Trust indicators */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.8, duration: 0.6 }}
+        className="container relative z-10 px-4 mt-12 pb-20 overflow-hidden"
+      >
+        <div className="pt-8 border-t border-border/50">
+          <p className="text-sm text-muted-foreground mb-8 text-center uppercase tracking-wider font-medium opacity-80">
+            Empresas que confiam na B2 Nexus
+          </p>
+          
+          {/* Marquee Container */}
+          <div className="relative group">
+            {/* Gradient Mask for fade effect */}
+            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
+            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
+            
+            <div className="flex overflow-hidden">
+              <motion.div 
+                className="flex gap-12 items-center whitespace-nowrap"
+                animate={{
+                  x: [0, -1035], // Adjust based on content width roughly
+                }}
+                transition={{
+                  x: {
+                    repeat: Infinity,
+                    repeatType: "loop",
+                    duration: 20,
+                    ease: "linear",
+                  },
+                }}
+              >
+                {/* Double the list for seamless loop */}
+                {[...companies, ...companies].map((company, index) => (
+                  <div 
+                    key={`${company.name}-${index}`} 
+                    className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity cursor-default group/item"
+                  >
+                    <div className="p-2 rounded-lg bg-muted/30 group-hover/item:bg-primary/10 transition-colors">
+                      <company.icon className="w-5 h-5 text-muted-foreground group-hover/item:text-primary transition-colors" />
+                    </div>
+                    <span className="text-lg font-bold text-muted-foreground group-hover/item:text-foreground transition-colors">
+                      {company.name}
+                    </span>
+                  </div>
+                ))}
+              </motion.div>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+      
     </section>
   );
 };

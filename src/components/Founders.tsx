@@ -7,28 +7,28 @@ const founders = [
     name: "Jhordan Borges",
     role: "CEO & Co-founder",
     description: "Visionário estratégico com mais de 10 anos de experiência em growth hacking e escala de negócios digitais.",
-    image: "jhordan-perfil.png", // nome do arquivo na pasta public "jhordan-borges.png"
-    linkedin: "https://www.linkedin.com/in/", // Preencher com o link do LinkedIn
-    twitter: "https://twitter.com/", // Preencher com o link do Twitter
-    instagram: "https://instagram.com/", // Preencher com o link do Instagram
+    image: "jhordan-perfil.webp", 
+    linkedin: "https://www.linkedin.com/in/", 
+    twitter: "https://twitter.com/", 
+    instagram: "https://instagram.com/", 
   },
   {
     name: "Wendel Lucas",
     role: "CTO & Founder",
     description: "Especialista em inteligência artificial e arquitetura de sistemas distribuídos de alta performance.",
-    image: "wendel-perfil.png", // nome do arquivo na pasta public "wendel-lucas.png"
-    linkedin: "https://www.linkedin.com/in/", // Preencher com o link do LinkedIn
-    twitter: "https://twitter.com/", // Preencher com o link do Twitter
-    instagram: "https://instagram.com/", // Preencher com o link do Instagram
+    image: "wendel-perfil.webp", 
+    linkedin: "https://www.linkedin.com/in/",
+    twitter: "https://twitter.com/", 
+    instagram: "https://instagram.com/", 
   },
   {
     name: "Rodrigo Santos",
     role: "CMO & Co-founder",
     description: "Mestre em branding e psicologia do consumidor, focado em criar conexões autênticas.",
-    image: "rodrigo-perfil.png", // nome do arquivo na pasta public "rodrigo-santos.png"
-    linkedin: "https://www.linkedin.com/in/", // Preencher com o link do LinkedIn
-    twitter: "https://twitter.com/", // Preencher com o link do Twitter
-    instagram: "https://instagram.com/", // Preencher com o link do Instagram
+    image: "rodrigo-perfil.webp", 
+    linkedin: "https://www.linkedin.com/in/", 
+    twitter: "https://twitter.com/", 
+    instagram: "https://instagram.com/", 
   },
 ];
 
@@ -74,9 +74,13 @@ const Founders = () => {
                   <div className="w-full aspect-square mb-6 rounded-2xl bg-gradient-to-br from-muted/30 to-muted/10 border border-white/5 flex items-center justify-center relative overflow-hidden group-hover:from-primary/10 group-hover:to-accent/5 transition-colors">
                     <div className="absolute inset-0 bg-grid-white/5 [mask-image:linear-gradient(0deg,white,transparent)]" />
                     <img 
-                    src={founder.image} 
-                    alt={founder.name} 
-                    className="max-w-full h-auto object-cover text-muted-foreground/30 group-hover:text-primary/50 transition-colors duration-500" 
+                      src={founder.image} 
+                      alt={founder.name} 
+                      className="w-full h-full object-cover text-muted-foreground/30 group-hover:text-primary/50 transition-all duration-500 transform-gpu" 
+                      style={{ 
+                        imageRendering: '-webkit-optimize-contrast',
+                        backfaceVisibility: 'hidden'
+                      }}
                     />
                     
                     {/* Placeholder content overlay */}
