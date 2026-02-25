@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Bot, Calendar, Zap, Facebook, Webhook, Database, MessageSquare } from "lucide-react";
+import { Bot, Calendar, Zap, Facebook, Webhook, Database, MessageSquare, ArrowUpDown } from "lucide-react";
 
 const services = [
   {
@@ -10,12 +10,12 @@ const services = [
   {
     icon: Calendar,
     title: "Integração com Google Calendar",
-    description: "Integração com Google Calendar para agendamento de consultas e reuniões."
+    description: "Integração com Google Calendar para agendamentos no geral de forma automatizada."
   },
   {
     icon: Database,
-    title: "Integração com CRM",
-    description: "Integração com CRM para gerenciamento de leads e clientes."
+    title: "Integração com CRM Kanban",
+    description: "Integração com CRM Kanban para gerenciamento de leads e clientes."
   },
   {
     icon: MessageSquare,
@@ -25,12 +25,17 @@ const services = [
   {
     icon: Facebook,
     title: "Facebook Leads",
-    description: "Coleta de leads e envio de mensagens para leads de forma automatizada e personalizada."
+    description: "Coleta de leads dos formulários do Facebook e envio da primeira mensagem para leads de forma automatizada e personalizada."
   },
   {
     icon: Webhook,
-    title: "API e Webhooks",
-    description: "Criação de API e Webhooks para integração com outros sistemas."
+    title: "Webhooks",
+    description: "Envie e receba eventos automaticamente entre sistemas."
+  },
+  {
+    icon: ArrowUpDown,
+    title: "API",
+    description: "Integração com outros sistemas via API."
   }
 ];
 
@@ -61,12 +66,12 @@ const Services = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <span className="text-primary text-sm font-semibold uppercase tracking-wider">Serviços</span>
+          <span className="text-primary text-2xl font-semibold uppercase tracking-wider">Serviços</span>
           <h2 className="text-4xl md:text-5xl font-bold mt-4 mb-6">
-            Soluções completas para seu <span className="text-gradient">crescimento</span>
+            Transformamos conversas em vendas,<span className="text-gradient"> 24 horas por dia!</span>
           </h2>
           <p className="text-muted-foreground text-lg">
-            Combinamos tecnologia de ponta com estratégias comprovadas para entregar resultados mensuráveis.
+            Com automação inteligente de atendimento, você nunca mais perde um cliente por demora de atendimento. WhatsApp, Instagram, Facebook, tudo integrado e automatizado! Resultado? Clientes felizes respondidos em segundos, e seu time livre para vender mais!
           </p>
         </motion.div>
 

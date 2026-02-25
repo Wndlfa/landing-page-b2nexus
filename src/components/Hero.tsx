@@ -1,168 +1,219 @@
-import { motion } from "framer-motion";
-import { Button } from "@/components/ui/button";
-import { ArrowRight, Sparkles, Zap, Shield, Activity, Cpu, Globe } from "lucide-react";
 
-const companies = [
-  { name: 'TechFlow', icon: Activity },
-  { name: 'Innovate', icon: Zap },
-  { name: 'ScaleUp', icon: Cpu },
-  { name: 'GrowthCo', icon: Globe },
-  { name: 'NextGen', icon: Shield },
-];
+import { useEffect, useRef, useState } from "react";
+import { Button } from "@/components/ui/button";
+import { ArrowRight } from "lucide-react";
+import { TrustIndicators } from "@/components/TrustIndicators";
+
+function Particle({index}: {index: number}) {
+  const size = Math.random() * 4 + 1;
+  const left = Math.random() * 100;
+  const animDuration = Math.random() * 8 + 6;
+  const animDelay = Math.random() * 5;
+  const opacity = Math.random() * 0.5 + 0.2;
+  return (
+    <div
+      className="absolute rounded-full"
+      style={{ 
+        width: size,
+        height: size,
+        left: `${left}%`,
+        bottom: '-5%',
+        background: index % 3 === 0 ? '#00f4ff' : index % 3 === 1 ? '#6366f1' : '#0077ff',
+        opacity,
+        animation: `floatUp ${animDuration}s ${animDelay}s infinite linear`,
+      }}
+    />
+  );
+}
+
+function RotatingShape ({ type, size, x, y, delay }: { type: string; size: number; x: number; y: number; delay: number }) {
+  const shapeStyles: Record<string, React.CSSProperties> = {
+    cube: {
+      width: size,
+      height: size,
+      border: '1.5px solid rgba(0, 212, 255, 0.3)',
+      animation: `rotateCube ${12 + delay}s ${delay}s infinite linear`,
+      boxShadow: '0 0 15px rgba(0, 212, 255, 0.15), inset 0 0 15px rgba(0, 212, 255, 0.05)',     
+    },
+    diamond: {
+      width: size,
+      height: size,
+      border: '1.5px solid rgba(99, 102, 241, 0.3)',
+      transform: 'rotate(45deg)',
+      animation: `rotateDiamond ${10 + delay}s ${delay}s infinite linear`,
+      boxShadow: '0 0 15px rgba(99, 102, 241, 0.15), inset 0 0 15px rgba(99, 102, 241, 0.05)',     
+    },
+    ring: {
+      width: size,
+      height: size,
+      borderRadius: '50%',
+      border: '1.5px solid rgba(0, 119, 255, 0.3)',
+      animation: `pulseRing ${8 + delay}s ${delay}s infinite ease-in-out`,
+      boxShadow: '0 0 20px rgba(0, 119, 255, 0.1)',     
+    },
+  };
+  
+  return (
+    <div className="absolute" 
+      style={{
+        left: `${x}%`,
+        top: `${y}%`,
+        ...shapeStyles[type],
+      }}
+    />
+  );
+}
 
 const Hero = () => {
+  const heroRef = useRef<HTMLDivElement>(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!heroRef.current) return;
+      const rect = heroRef.current.getBoundingClientRect();
+      setMousePos({
+        x: ((e.clientX - rect.left) / rect.width - 0.5) * 20,
+        y: ((e.clientY - rect.top) / rect.height - 0.5) * 20,
+      });
+    };
+    const el = heroRef.current;
+    el?.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      el?.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, []);
+
+  const shapes = [
+    { type: 'cube', size: 80, x: 10, y: 15, delay: 0 },
+    { type: 'diamond', size: 60, x: 85, y: 20, delay: 2 },
+    { type: 'ring', size: 100, x: 75, y: 60, delay: 1 },
+    { type: 'cube', size: 50, x: 20, y: 70, delay: 3 },
+    { type: 'diamond', size: 40, x: 90, y: 80, delay: 1.5 },
+    { type: 'ring', size: 70, x: 5, y: 45, delay: 2.5 },
+    { type: 'cube', size: 35, x: 50, y: 10, delay: 4 },
+    { type: 'diamond', size: 55, x: 60, y: 75, delay: 0.5 },
+  ];
+
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-      {/* Background gradient glow */}
-      <div className="absolute inset-0 bg-gradient-glow" />
-      
-      {/* Animated grid background */}
-      <div className="absolute inset-0 opacity-20">
-        <div 
-          className="absolute inset-0"
+    <section ref={heroRef} 
+    className="relative min-h-screen flex items-center justify-center overflow-hidden pt-32"
+    style={{
+      background: 'linear-gradient(135deg, #030712 0%, #060f1c 50% , #0f172a 100%)',
+      }}
+      >
+        {/* Cyberpunk Grid */}
+        <div className="absolute inset-0 opacity-[0.07]"
           style={{
-            backgroundImage: `linear-gradient(hsl(var(--border)) 1px, transparent 1px),
-                             linear-gradient(90deg, hsl(var(--border)) 1px, transparent 1px)`,
-            backgroundSize: '60px 60px'
+            backgroundImage: `
+            linear-gradient(rgba(0, 212, 255, 0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(0, 212, 255, 0.5) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px',
+            perspective: '500px',
+            transform: `rotateX(${mousePos.y * 0.3}deg) rotateY(${mousePos.x * 0.3}deg)`,
+            transition: 'transform 0.3s ease-out',
           }}
         />
-      </div>
 
-      {/* Floating orbs */}
-      <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-glow" />
-      <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-accent/10 rounded-full blur-3xl animate-pulse-glow" style={{ animationDelay: '1.5s' }} />
+        {/* Radial glow */}
+        <div
+        className="absolute w-[800px] h-[800px] rounded-full opacity-20"
+        style={{
+          background: 'radial-gradient(circle, rgba(0, 212, 255, 0.3) 0%, rgba(99, 102, 241, 0.1) 40% , transparent 70%)',
+          left: '50%',
+          top: '50%',
+          transform: `translate(-50%, -50%) translate(${mousePos.x * 2}px, ${mousePos.y * 2}px)`,
+          transition: 'transform 0.5s ease-out', 
+        }}
+        />
 
-      <div className="container relative z-10 px-4 py-20 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, ease: "easeOut" }}
-          className="text-start max-w-5xl mx-auto"
+        {/* Floating 3D Shapes */}
+        <div 
+        className="absolute inset-0"
+        style={{
+          transform: `translate(${mousePos.x * 0.5}px, ${mousePos.y * 0.5}px)`,
+          transition: 'transform 0.4s ease-out',
+        }}
         >
-          {/* Badge */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
-            className="inline-flex items-center gap-2 glass px-4 py-2 rounded-full my-8"
-          >
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm text-muted-foreground">Marketing potencializado por IA</span>
-          </motion.div>
+          {shapes.map((shape, i) => (
+            <RotatingShape key={i} {...shape}/>
+          ))}
+        </div>
 
-          {/* Headline */}
-          <h1 className="text-5xl md:text-7xl lg:text-8xl font-extrabold tracking-tight mb-6 text-start">
-            <span className="text-foreground">Escale seu </span>
-            <span className="text-gradient">crescimento</span>
-            <br />
-            <span className="text-foreground">com automação</span>
+        {/* Particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          {Array.from({ length: 30 }).map((_, i) => (
+            <Particle key={i} index={i}/>
+          ))}
+        </div>
+
+        {/* Scan line effect */}
+        <div className="absolute inset-0 pointer-events-none opacity-[0.03]"
+          style={{
+            background: 'repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0, 212, 255, 0.5) 2px, rgba(0, 212, 255, 0.5) 4px)',
+          }}
+        />
+        {/* Hero Content */}
+        <div className="relative z-10 text-center px-6 max-w-5xl mx-auto">
+
+          {/* Main Title */}
+          <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-extrabold leading-[1.05] tracking-tight mb-6"
+          style={{ animation: 'fadeInUp 0.8s 0.2s ease-out both'}}>
+            <span className="block">Escale seu </span>
+            <span className="block bg-clip-text text-transparent text-gradient"
+            style={{ 
+              textShadow: 'none',
+              filter: 'drop-shadow(0 0 30px rgba(0, 212, 255, 0.3))'
+            }}>crescimento</span>
+            <span className="block">com automação</span>
           </h1>
           
-          {/* Subheadline */}
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed text-start"
+          {/* Subtitle */}
+          <p
+            className="text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed"
+            style={{ color: '#7b8ba8', animation: 'fadeInUp 0.8s 0.4s ease-out both'}}
           >
             A <strong className="text-foreground">B2 Nexus</strong> combina estratégia de marketing 
             com inteligência artificial para transformar leads em clientes de forma previsível e escalável.
-          </motion.p>
+          </p>
 
           {/* CTA Buttons */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.5 }}
-            className="flex flex-col sm:flex-row gap-4 justify-start items-start "
+          <div
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            style={{ animation: 'fadeInUp 0.8s 0.6s ease-out both'}}
           >
-            <Button variant="hero" size="lg" className="group">
-              Agendar consultoria grátis
-              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <Button size="lg" 
+            className="relative group px-8 py-6 text-base font-semibold rounded-xl border-0 text-white overflow-hidden"
+            style={{
+              background: 'linear-gradient(135deg, #00d4ff, #6366f1)',
+              boxShadow: '0 0 30px rgba(0, 212, 255, 0.3), 0 0 60px rgba(99, 102, 241, 0.15)',
+            }}
+            >
+              <span className="relative z-10 flex items-center gap-2">
+                Agendar consultoria grátis
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </span>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" 
+              style={{ background: 'linear-gradient(135deg, #6366f1, #a855f7)'}}
+                />
+           
             </Button>
-            <Button variant="glass" size="lg">
-              Ver resultados
+            <Button size="lg" variant="outline" 
+            className="px-8 py-6 text-base font-semibold rounded-xl !bg-transparent hover:!bg-white/5 transition-colors text-primary border-primary"
+            >
+              <span className="relative z-10 flex items-center gap-2">Ver resultados</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Button>
-          </motion.div>
-        </motion.div>
-
-        {/* Right Column - Image Placeholder */}
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-          className="hidden lg:flex items-center justify-center relative"
-        >
-          <div className="w-full aspect-square max-w-xl bg-muted/10 rounded-3xl border-2 border-dashed border-primary/20 flex items-center justify-center relative backdrop-blur-sm">
-            <div className="absolute inset-0 bg-gradient-to-tr from-primary/5 to-transparent rounded-3xl" />
-            
-            <div className="text-center p-6 relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 border border-primary/20 shadow-lg shadow-primary/5">
-                <Sparkles className="w-8 h-8 text-primary" />
-              </div>
-              <h3 className="text-lg font-semibold text-foreground mb-1">Visualização do Produto</h3>
-              <p className="text-sm text-muted-foreground">Adicione sua imagem ou mockup aqui</p>
-            </div>
           </div>
-        </motion.div>
-
-       
-      </div>
-
-      {/* Trust indicators */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.8, duration: 0.6 }}
-        className="container relative z-10 px-4 mt-12 pb-20 overflow-hidden"
-      >
-        <div className="pt-8 border-t border-border/50">
-          <p className="text-sm text-muted-foreground mb-8 text-center uppercase tracking-wider font-medium opacity-80">
-            Empresas que confiam na B2 Nexus
-          </p>
-          
-          {/* Marquee Container */}
-          <div className="relative group">
-            {/* Gradient Mask for fade effect */}
-            <div className="absolute left-0 top-0 bottom-0 w-20 bg-gradient-to-r from-background to-transparent z-10" />
-            <div className="absolute right-0 top-0 bottom-0 w-20 bg-gradient-to-l from-background to-transparent z-10" />
-            
-            <div className="flex overflow-hidden">
-              <motion.div 
-                className="flex gap-12 items-center whitespace-nowrap"
-                animate={{
-                  x: [0, -1035], // Adjust based on content width roughly
-                }}
-                transition={{
-                  x: {
-                    repeat: Infinity,
-                    repeatType: "loop",
-                    duration: 20,
-                    ease: "linear",
-                  },
-                }}
-              >
-                {/* Double the list for seamless loop */}
-                {[...companies, ...companies].map((company, index) => (
-                  <div 
-                    key={`${company.name}-${index}`} 
-                    className="flex items-center gap-3 opacity-60 hover:opacity-100 transition-opacity cursor-default group/item"
-                  >
-                    <div className="p-2 rounded-lg bg-muted/30 group-hover/item:bg-primary/10 transition-colors">
-                      <company.icon className="w-5 h-5 text-muted-foreground group-hover/item:text-primary transition-colors" />
-                    </div>
-                    <span className="text-lg font-bold text-muted-foreground group-hover/item:text-foreground transition-colors">
-                      {company.name}
-                    </span>
-                  </div>
-                ))}
-              </motion.div>
-            </div>
-          </div>
+          {/* Trust Indicators */}
+          <p className="text-md md:text-lg max-w-2xl mx-auto leading-relaxed" 
+          style={{ color: '#7b8ba8', marginTop: '50px', animation: 'fadeInUp 0.8s 0.6s ease-out both'}}>
+            Powered by:
+          </p>  
+          <TrustIndicators/>
         </div>
-      </motion.div>
-      
-    </section>
+      </section>
   );
 };
 

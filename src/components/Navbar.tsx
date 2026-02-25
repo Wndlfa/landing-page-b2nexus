@@ -1,53 +1,75 @@
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Zap, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navLinks = [
-  { label: "Serviços", href: "#servicos" },
-  { label: "Resultados", href: "#resultados" },
-  { label: "Depoimentos", href: "#depoimentos" },
-  { label: "Contato", href: "#contato" }
+  { label: "Ecossistema", href: "#ecossistema" },
+  { label: "Funcionalidades", href: "#funcionalidades" },
+  { label: "Preços", href: "#preços" },
+  { label: "FAQ", href: "#faq"}
 ];
 
-const Navbar = () => {
+export default function Navbar() {
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <motion.nav
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 glass"
-    >
-      <div className="container px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+    <div className="relative" style={{ background: '#030712' }}>
+      {/* Fixed Navigation */}
+      <div
+        className="fixed top-0 left-0 right-0 z-50 px-6 py-4 transition-all duration-300"
+        style={{
+          background: scrollY > 50 ? 'rgba(3, 7, 18, 0.85)' : 'transparent',
+          backdropFilter: scrollY > 50 ? 'blur(20px)' : 'none',
+          borderBottom: scrollY > 50 ? '1px solid rgba(0, 212, 255, 0.06)' : '1px solid transparent',
+        }}
+      >
+      <div className="max-w-6xl mx-auto flex items-center justify-between">
           {/* Logo */}
-          <div className="flex items-center gap-2">
-            <img src="logo-b2n.png" alt="B2 Nexus" className="w-16 h-16 rounded-lg object-contain" />
-            
+          <div className="flex items-center gap-2.5">
+            <div
+              className="w-20 h-12 rounded-lg flex items-center justify-center">
+              <img src="logo-b2n.png" alt="B2 Nexus" className="w-16 h-16 rounded-lg object-contain" />
+            </div>
           </div>
 
-          {/* Desktop nav */}
+          {/* Nav Links */}
           <div className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {['Ecossistema', 'Funcionalidades', 'Preços', 'FAQ'].map((item) => (
               <a
-                key={link.label}
-                href={link.href}
-                className="text-sm text-muted-foreground hover:text-foreground transition-colors"
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                className="text-md font-normal transition-colors duration-200 hover:text-primary text-gray-300"
               >
-                {link.label}
+                {item}
               </a>
             ))}
           </div>
 
           {/* CTA */}
-          <div className="hidden md:block">
-            <a href="https://app.b2nexus.com.br">
-            <Button variant="hero" size="sm">
-              Comece agora
-            </Button>
+          
+          <div className="flex items-center gap-3">
+            <a href="https://app.b2nexus.com.br/login"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium transitions-colors duration-200 hover:text-primary hover:underline text-gray-300">
+              Login
             </a>
+            <Button
+          variant="hero"
+          size="sm"
+          className="px-4 py-2 rounded-lg"
+          onClick={() => window.open('https://app.b2nexus.com.br/login', '_blank noopener noreferrer')}
+          >
+            Testar Grátis
+          </Button>
           </div>
 
           {/* Mobile menu button */}
@@ -65,10 +87,7 @@ const Navbar = () => {
 
         {/* Mobile menu */}
         {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
+          <div
             className="md:hidden py-4 border-t border-border/50"
           >
             <div className="flex flex-col gap-4">
@@ -86,11 +105,9 @@ const Navbar = () => {
                 Fale conosco
               </Button>
             </div>
-          </motion.div>
+          </div>
         )}
       </div>
-    </motion.nav>
+    </div>
   );
-};
-
-export default Navbar;
+}
